@@ -4,5 +4,5 @@ import 'package:test_based_on_pubc_mobile_logic/features/post/domain/entities/po
 
 abstract class PostRepositoryInterface {
   Future<List<PostEntity>> getPosts();
-  //Future<Response> getPost(int id);
+  Future<PostEntity> getPost(int id);
 }

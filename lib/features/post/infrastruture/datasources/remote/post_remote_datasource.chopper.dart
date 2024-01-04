@@ -18,14 +18,14 @@ final class _$PostRemoteDataSource extends PostRemoteDataSource {
   final Type definitionType = PostRemoteDataSource;
 
   @override
-  Future<Response<Map<String, dynamic>>> getPosts() {
+  Future<Response<List<dynamic>>> getPosts() {
     final Uri $url = Uri.parse('https://jsonplaceholder.typicode.com/posts');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<Map<String, dynamic>, Map<String, dynamic>>($request);
+    return client.send<List<dynamic>, List<dynamic>>($request);
   }
 
   @override

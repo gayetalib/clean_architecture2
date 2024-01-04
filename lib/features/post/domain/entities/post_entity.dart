@@ -19,4 +19,14 @@ class PostEntity {
       userId: json['userId'] as int,
     );
   }
+
+  // convert entity
+  factory PostEntity.fromEntity(PostEntity entity) {
+    return PostEntity(
+      id: entity.id,
+      title: entity.title,
+      body: entity.body,
+      userId: entity.userId,
+    );
+  }
 }
