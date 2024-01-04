@@ -4,7 +4,6 @@ import 'package:test_based_on_pubc_mobile_logic/features/post/domain/repositorie
 import 'package:test_based_on_pubc_mobile_logic/features/post/infrastruture/datasources/remote/post_remote_datasource.dart';
 
 class PostRepositoryImpl implements PostRepositoryInterface {
-  //final ChopperClient _chopperClient;
   final PostRemoteDataSource _remoteDataSource;
 
   PostRepositoryImpl(this._remoteDataSource);
@@ -26,8 +25,8 @@ class PostRepositoryImpl implements PostRepositoryInterface {
   Future<PostEntity> getPost(int id) async {
     final response = await _remoteDataSource.getPost(id);
     if (response.isSuccessful) {
-      final dynamic jsonElement = response.body;
-      return jsonElement.map((json) => PostEntity.fromEntity(json));
+      final jsonElement = response.body as dynamic;
+      return PostEntity.fromJson(jsonElement);
     } else {
       throw Exception('Failed to load post of id = $id');
     }

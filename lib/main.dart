@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Clean Architecture Example',
       home: Provider<PostRepositoryInterface>(
         create: (_) => PostRepositoryImpl(PostRemoteDataSource.create()),
-        child: const HomePage(),
+        child: const PostScreen(),
       ),
     );
   }
