@@ -24,15 +24,32 @@ class CommentRepositoryImpl implements CommentRepositoryInterface {
   }
 
   @override
-  Future deleteComment(int id) {
-    // TODO: implement deleteComment
-    throw UnimplementedError();
+  Future deleteComment(int id) async {
+    try {
+      final response = await _remoteDatasourceService.deleteComment(id);
+      if (response.isSuccessful) {
+        print('${response.body}');
+      } else {
+        print('Failed to delete comment : ${response.error}');
+      }
+    } catch (e) {
+      throw Exception('Error : $e');
+    }
   }
 
   @override
-  Future<CommentEntity> getComment(int id) {
-    // TODO: implement getComment
-    throw UnimplementedError();
+  Future<CommentEntity> getComment(int id) async {
+    try {
+      final response = await _remoteDatasourceService.getComment(id);
+      if (response.isSuccessful) {
+        final dynamic data = response.body! as dynamic;
+        return CommentEntity.fromJson(data);
+      } else {
+        throw Exception('Failed to get post : ${response.error}');
+      }
+    } catch (e) {
+      throw Exception('Error getting post : $e');
+    }
   }
 
   @override
@@ -47,8 +64,17 @@ class CommentRepositoryImpl implements CommentRepositoryInterface {
   }
 
   @override
-  Future<CommentEntity> updateComment(int id, Map<String, dynamic> body) {
-    // TODO: implement updateComment
-    throw UnimplementedError();
+  Future<CommentEntity> updateComment(int id, Map<String, dynamic> body) async {
+    try {
+      final response = await _remoteDatasourceService.updateComment(id, body);
+      if (response.isSuccessful) {
+        final data = response.body!;
+        return CommentEntity.fromJson(data);
+      } else {
+        throw Exception('Failed to update post : ${response.error}');
+      }
+    } catch (e) {
+      throw Exception('Error : $e');
+    }
   }
 }

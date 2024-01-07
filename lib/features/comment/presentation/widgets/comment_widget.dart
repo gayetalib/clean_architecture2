@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,11 @@ class CommentWidget extends StatelessWidget {
     TextEditingController textController = TextEditingController();
 
     void showBootomSheet(int? id) async {
-      //if (id != null) {}
+      if (id != null) {
+        final existingPost = await repository.getComment(id);
+        authorController.text = existingPost.author;
+        textController.text = existingPost.text;
+      }
       showModalBottomSheet(
           elevation: 5,
           isScrollControlled: true,
@@ -50,21 +56,20 @@ class CommentWidget extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () async {
-                          print('**** Prepare add Data');
+                          final body = {
+                            'author': authorController.text,
+                            'text': textController.text,
+                          };
                           if (id == null) {
-                            final newPost = {
-                              'author': authorController.text,
-                              'text': textController.text
-                            };
-                            await repository.addComment(newPost);
+                            await repository.addComment(body);
                           }
 
                           if (id != null) {
-                            //await repository.updateComment(id, body)
+                            await repository.updateComment(id, body);
                           }
 
-                          // authorController = "" as TextEditingController;
-                          // textController = "" as TextEditingController;
+                          authorController.text = "";
+                          textController.text = "";
 
                           Navigator.of(context).pop();
                         },
@@ -91,6 +96,12 @@ class CommentWidget extends StatelessWidget {
           style: TextStyle(color: Color.fromARGB(255, 221, 218, 218)),
         ),
         backgroundColor: const Color.fromARGB(255, 8, 102, 179),
+        actions: [
+          Icon(
+            Icons.settings,
+            color: Colors.white,
+          )
+        ],
       ),
       body: FutureBuilder<List<CommentEntity>>(
         future: repository.getComments(),
@@ -134,7 +145,7 @@ class CommentWidget extends StatelessWidget {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  // edit service
+                                  showBootomSheet(comments[index].id);
                                 },
                                 icon: Icon(
                                   Icons.edit,
@@ -142,7 +153,32 @@ class CommentWidget extends StatelessWidget {
                                 )),
                             IconButton(
                                 onPressed: () {
-                                  // delete service
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Deletion'),
+                                      content: const Text(
+                                          'Etes-vous sur de supprimer this comment ?'),
+                                      contentPadding:
+                                          const EdgeInsets.all(20.0),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              //Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel')),
+                                        TextButton(
+                                            onPressed: () async {
+                                              await repository.deleteComment(
+                                                  comments[index].id);
+                                              // print(
+                                              //     '${comments[index].id}');
+                                            },
+                                            child: const Text('Confirm'))
+                                      ],
+                                    ),
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.delete,

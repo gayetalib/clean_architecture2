@@ -12,9 +12,9 @@ class CommentEntity {
 
   factory CommentEntity.fromJson(Map<String, dynamic> json) {
     return CommentEntity(
-      id: json['id'],
-      author: json['author'],
-      text: json['text'],
+      id: json['id'] as int,
+      author: json['author'] as String,
+      text: json['text'] as String,
       //date: json['date'],
     );
   }
