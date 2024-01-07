@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/post/domain/entities/post_entity.dart';
@@ -14,7 +15,7 @@ class PostScreen extends StatelessWidget {
         title: const Text('Post Detail'),
       ),
       body: FutureBuilder<PostEntity>(
-          future: repository.getPost(2),
+          future: repository.getPost(69),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -26,9 +27,14 @@ class PostScreen extends StatelessWidget {
               );
             } else {
               final post = snapshot.data as PostEntity;
-              return ListTile(
-                title: Text(post.title),
-                subtitle: Text(post.body),
+              return Center(
+                child: ListTile(
+                  title: Text(
+                    post.title,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  subtitle: Text(post.body),
+                ),
               );
             }
           }),

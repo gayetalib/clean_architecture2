@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_based_on_pubc_mobile_logic/features/comment/presentation/screens/comment.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/post/domain/entities/post_entity.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/post/domain/repositories/post_repository_interface.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/post/infrastruture/datasources/remote/post_remote_datasource.dart';
@@ -17,10 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Clean Architecture Example',
       home: Provider<PostRepositoryInterface>(
         create: (_) => PostRepositoryImpl(PostRemoteDataSource.create()),
-        child: const PostScreen(),
+        child: const CommentScreen(),
       ),
     );
   }
