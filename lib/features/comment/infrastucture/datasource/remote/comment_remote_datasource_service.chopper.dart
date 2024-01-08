@@ -20,7 +20,7 @@ final class _$CommentRemoteDatasourceService
 
   @override
   Future<Response<List<dynamic>>> getComments() {
-    final Uri $url = Uri.parse('http://192.168.1.71:8081/comments');
+    final Uri $url = Uri.parse('http://192.168.1.102:8081/comments');
     final Request $request = Request(
       'GET',
       $url,
@@ -31,7 +31,7 @@ final class _$CommentRemoteDatasourceService
 
   @override
   Future<Response<dynamic>> getComment(int id) {
-    final Uri $url = Uri.parse('http://192.168.1.71:8081/comments/${id}');
+    final Uri $url = Uri.parse('http://192.168.1.102:8081/comments/${id}');
     final Request $request = Request(
       'GET',
       $url,
@@ -42,7 +42,7 @@ final class _$CommentRemoteDatasourceService
 
   @override
   Future<Response<dynamic>> addComment(Map<String, dynamic> body) {
-    final Uri $url = Uri.parse('http://192.168.1.71:8081/comments');
+    final Uri $url = Uri.parse('http://192.168.1.102:8081/comments');
     final $body = body;
     final Request $request = Request(
       'POST',
@@ -55,7 +55,7 @@ final class _$CommentRemoteDatasourceService
 
   @override
   Future<Response<dynamic>> deleteComment(int id) {
-    final Uri $url = Uri.parse('http://192.168.1.71:8081/comments/${id}');
+    final Uri $url = Uri.parse('http://192.168.1.102:8081/comments/${id}');
     final Request $request = Request(
       'DELETE',
       $url,
@@ -69,7 +69,7 @@ final class _$CommentRemoteDatasourceService
     int id,
     Map<String, dynamic> body,
   ) {
-    final Uri $url = Uri.parse('http://192.168.1.71:8081/comments/${id}');
+    final Uri $url = Uri.parse('http://192.168.1.102:8081/comments/${id}');
     final $body = body;
     final Request $request = Request(
       'PUT',

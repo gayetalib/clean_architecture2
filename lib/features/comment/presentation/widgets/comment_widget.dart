@@ -6,8 +6,19 @@ import 'package:provider/provider.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/entity/comment_entity.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/repositories/comment_repository_interface.dart';
 
-class CommentWidget extends StatelessWidget {
+class CommentWidget extends StatefulWidget {
   const CommentWidget({super.key});
+
+  @override
+  _CommentWidget createState() => _CommentWidget();
+}
+
+class _CommentWidget extends State<CommentWidget> {
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,17 +102,11 @@ class CommentWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFECEAF4),
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Commentaires',
           style: TextStyle(color: Color.fromARGB(255, 221, 218, 218)),
         ),
         backgroundColor: const Color.fromARGB(255, 8, 102, 179),
-        actions: [
-          Icon(
-            Icons.settings,
-            color: Colors.white,
-          )
-        ],
       ),
       body: FutureBuilder<List<CommentEntity>>(
         future: repository.getComments(),
@@ -117,7 +122,7 @@ class CommentWidget extends StatelessWidget {
           } else {
             final comments = snapshot.data as List<CommentEntity>;
             if (comments.isEmpty) {
-              return Center(
+              return const Center(
                 child: Text(
                   "Il n'ya pas de commentaire !",
                   style: TextStyle(color: Colors.black),
@@ -147,12 +152,14 @@ class CommentWidget extends StatelessWidget {
                                 onPressed: () {
                                   showBootomSheet(comments[index].id);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit,
                                   color: Colors.indigo,
                                 )),
                             IconButton(
                                 onPressed: () {
+                                  // dialog(
+                                  //     context, comments[index].id, repository);
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) =>
@@ -165,22 +172,28 @@ class CommentWidget extends StatelessWidget {
                                       actions: [
                                         TextButton(
                                             onPressed: () {
-                                              //Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
                                             },
                                             child: const Text('Cancel')),
                                         TextButton(
                                             onPressed: () async {
                                               await repository.deleteComment(
                                                   comments[index].id);
-                                              // print(
-                                              //     '${comments[index].id}');
+                                              // Refresh the screen by updating the state
+                                              setState(() {
+                                                comments.removeAt(
+                                                    index); // Update the comments list
+                                              });
+
+                                              Navigator.of(context)
+                                                  .pop(); // Close the dialog
                                             },
                                             child: const Text('Confirm'))
                                       ],
                                     ),
                                   );
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.delete,
                                   color: Colors.redAccent,
                                 ))
@@ -195,6 +208,33 @@ class CommentWidget extends StatelessWidget {
           child: Icon(Icons.add, color: Colors.white),
           backgroundColor: const Color.fromARGB(255, 8, 102, 179),
           onPressed: () => showBootomSheet(null)),
+    );
+  }
+
+  void dialog(BuildContext context, int id,
+      CommentRepositoryInterface repositoryInterface) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Deletion'),
+        content: const Text('Etes-vous sur de supprimer this comment ?'),
+        contentPadding: const EdgeInsets.all(20.0),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel')),
+          TextButton(
+              onPressed: () async {
+                await repositoryInterface.deleteComment(id);
+                // print(
+                //     '${comments[index].id}');
+                Navigator.of(context).pop();
+              },
+              child: const Text('Confirm'))
+        ],
+      ),
     );
   }
 }
