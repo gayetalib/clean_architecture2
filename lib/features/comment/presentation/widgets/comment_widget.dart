@@ -1,12 +1,15 @@
-import 'dart:convert';
-
-import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:test_based_on_pubc_mobile_logic/config/router.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/entity/comment_entity.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/repositories/comment_repository_interface.dart';
+import 'package:test_based_on_pubc_mobile_logic/features/comment/infrastucture/datasource/remote/comment_remote_datasource_service.dart';
+import 'package:test_based_on_pubc_mobile_logic/features/comment/infrastucture/repositories/comment_repository_impl.dart';
+import 'package:test_based_on_pubc_mobile_logic/features/comment/presentation/screens/comment_one_screen.dart';
 
 class CommentWidget extends StatefulWidget {
+  static const String route = 'home';
   const CommentWidget({super.key});
 
   @override
@@ -23,6 +26,7 @@ class _CommentWidget extends State<CommentWidget> {
   @override
   Widget build(BuildContext context) {
     final repository = Provider.of<CommentRepositoryInterface>(context);
+
     TextEditingController authorController = TextEditingController();
     TextEditingController textController = TextEditingController();
 
@@ -135,12 +139,23 @@ class _CommentWidget extends State<CommentWidget> {
                       margin: const EdgeInsets.all(15),
                       child: ListTile(
                         title: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3),
-                          child: Text(
-                            comments[index].author,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(vertical: 3),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CommentOne(
+                                            comment: comments[index],
+                                          )),
+                                );
+                                //GoRouter.of(context).go('comment');
+                              },
+                              child: Text(
+                                comments[index].author,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            )),
                         subtitle: Text(
                           comments[index].text,
                           style: TextStyle(fontSize: 16),

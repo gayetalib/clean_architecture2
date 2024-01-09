@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_based_on_pubc_mobile_logic/config/router.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/repositories/comment_repository_interface.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/infrastucture/datasource/remote/comment_remote_datasource_service.dart';
 import 'package:test_based_on_pubc_mobile_logic/features/comment/infrastucture/repositories/comment_repository_impl.dart';
@@ -15,10 +16,10 @@ class CommentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Comment',
+        //home: CommentWidget(),
         home: Provider<CommentRepositoryInterface>(
-          create: (_) =>
-              CommentRepositoryImpl(CommentRemoteDatasourceService.create()),
-          child: const CommentWidget(),
-        ));
+            create: (_) =>
+                CommentRepositoryImpl(CommentRemoteDatasourceService.create()),
+            child: const CommentWidget()));
   }
 }

@@ -17,13 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Clean Architecture Example',
-      home: Provider<PostRepositoryInterface>(
-        create: (_) => PostRepositoryImpl(PostRemoteDataSource.create()),
-        child: const CommentScreen(),
-      ),
-    );
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Clean Architecture Example',
+        home: CommentScreen());
   }
 }

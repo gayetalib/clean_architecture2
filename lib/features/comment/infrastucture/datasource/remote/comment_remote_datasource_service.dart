@@ -1,6 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:test_based_on_pubc_mobile_logic/core/constants.dart';
-import 'package:test_based_on_pubc_mobile_logic/features/comment/domain/entity/comment_entity.dart';
+import 'package:test_based_on_pubc_mobile_logic/config/constants.dart';
 
 part 'comment_remote_datasource_service.chopper.dart';
 
