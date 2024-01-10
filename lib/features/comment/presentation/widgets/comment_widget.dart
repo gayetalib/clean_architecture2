@@ -149,7 +149,9 @@ class _CommentWidget extends State<CommentWidget> {
                                             comment: comments[index],
                                           )),
                                 );
-                                //GoRouter.of(context).go('comment');
+                                // GoRouter.of(context)
+                                //     .go('comment', extra: comments[index]);
+                                //router.go('comment', extra: comments[index]);
                               },
                               child: Text(
                                 comments[index].author,
@@ -157,8 +159,8 @@ class _CommentWidget extends State<CommentWidget> {
                               ),
                             )),
                         subtitle: Text(
-                          comments[index].text,
-                          style: TextStyle(fontSize: 16),
+                          '${comments[index].text} \n ${comments[index].date}',
+                          style: const TextStyle(fontSize: 16),
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,

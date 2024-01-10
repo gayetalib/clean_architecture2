@@ -54,12 +54,16 @@ class CommentRepositoryImpl implements CommentRepositoryInterface {
 
   @override
   Future<List<CommentEntity>> getComments() async {
-    final response = await _remoteDatasourceService.getComments();
-    if (response.isSuccessful) {
-      final List<dynamic> data = response.body!;
-      return data.map((json) => CommentEntity.fromJson(json)).toList();
-    } else {
-      throw Exception('null');
+    try {
+      final response = await _remoteDatasourceService.getComments();
+      if (response.isSuccessful) {
+        final List<dynamic> data = response.body!;
+        return data.map((json) => CommentEntity.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to get posts : ${response.error}');
+      }
+    } catch (e) {
+      throw Exception('Error getting posts : $e');
     }
   }
 
